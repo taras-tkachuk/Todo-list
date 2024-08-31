@@ -9,6 +9,23 @@ class TaskListView(generic.ListView):
     queryset = Task.objects.all().order_by("is_done", "-created_time")
 
 
+class TaskCreateView(generic.CreateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("todo:task-list")
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("todo:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("todo:task-list")
+
+
 class TagListView(generic.ListView):
     model = Tag
 
