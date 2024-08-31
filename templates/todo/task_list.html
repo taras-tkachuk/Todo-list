@@ -31,7 +31,15 @@
                   <a href="{% url 'todo:task-update' pk=task.id %}" class="card-link">Update</a>
                   <a href="{% url 'todo:task-delete' pk=task.id %}" class="card-link">Delete</a>
                 </div>
-               
+                {% if task.is_done %}
+                  <a href="{% url 'todo:toggle-complete-task' pk=task.id %}" class="btn btn-secondary link-to-page">
+                    Undo
+                  </a>
+                {% else %}
+                  <a href="{% url 'todo:toggle-complete-task' pk=task.id %}" class="btn btn-success link-to-page">
+                    Complete
+                  </a>
+                {% endif %}
               </div>
             </div>
           </div>
