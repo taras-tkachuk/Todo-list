@@ -1,6 +1,12 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.views import generic
+
+from todo.models import Task, Tag
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    return render(request, "todo/index.html", {})
+class TaskListView(generic.ListView):
+    model = Task
+    queryset = Task.objects.all().order_by("is_done", "-created_time")
+
+
+class TagListView(generic.ListView):
+    model = Tag

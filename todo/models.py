@@ -9,7 +9,7 @@ class Tag(models.Model):
 
 
 class Task(models.Model):
-    content = models.TextField()
+    content = models.CharField(max_length=255)
     created_time = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField(null=True, blank=True)
     is_done = models.BooleanField()
