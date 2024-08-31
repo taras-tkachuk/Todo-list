@@ -16,4 +16,4 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name="tasks", blank=True)
 
     def __str__(self):
-        return f"{self.content} - {self.is_done}"
+        return self.content
