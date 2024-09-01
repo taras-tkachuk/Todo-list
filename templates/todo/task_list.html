@@ -31,15 +31,12 @@
                   <a href="{% url 'todo:task-update' pk=task.id %}" class="card-link">Update</a>
                   <a href="{% url 'todo:task-delete' pk=task.id %}" class="card-link">Delete</a>
                 </div>
-                {% if task.is_done %}
-                  <a href="{% url 'todo:toggle-complete-task' pk=task.id %}" class="btn btn-secondary link-to-page">
-                    Undo
-                  </a>
-                {% else %}
-                  <a href="{% url 'todo:toggle-complete-task' pk=task.id %}" class="btn btn-success link-to-page">
-                    Complete
-                  </a>
-                {% endif %}
+                <form method="post" action="{% url 'todo:toggle-complete-task' pk=task.pk %}" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="submit"
+                         class="btn btn-primary {% if task.is_done %}btn-secondary{% else %}btn-success{% endif %}"
+                         value="{% if task.is_done %}Undo{% else %}Complete{% endif %}" style="float: right;"/>
+                </form>
               </div>
             </div>
           </div>
