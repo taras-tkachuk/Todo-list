@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-1">
+    <div class="row">
+      <div class="col-md-9">
+        <h3>TODO list <a href="{% url 'todo:task-create' %}" class="btn btn-primary">Add task</a></h3>
+        {% for task in task_list %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ task.content }} <span class="text-danger">
+                {% if task.is_done %}
+                  <span style="color: green">Done</span>
+                {% else %}
+                  <span style="color: red">Not done</span>
+                {% endif %}
+              </span></h5>
+              <p class="card-text">Created: {{ task.created_time }}
+                {% if task.deadline %}
+                  Deadline: {{ task.deadline }}
+                {% endif %}
+              </p>
+              <div class="d-flex justify-content-between">
+                <div>
+                  {% if task.tags.all %}
+                    Tags:
+                    {% for tag in task.tags.all %}
+                      <span>{{ tag }} </span>
+                    {% endfor %}
+                  {% endif %}
+                  <a href="{% url 'todo:task-update' pk=task.id %}" class="card-link">Update</a>
+                  <a href="{% url 'todo:task-delete' pk=task.id %}" class="card-link">Delete</a>
+                </div>
+                <form method="post" action="{% url 'todo:toggle-complete-task' pk=task.pk %}" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="submit"
+                         class="btn btn-primary {% if task.is_done %}btn-secondary{% else %}btn-success{% endif %}"
+                         value="{% if task.is_done %}Undo{% else %}Complete{% endif %}" style="float: right;"/>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
